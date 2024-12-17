@@ -1,20 +1,19 @@
-from fastapi import APIRouter, Depends, HTTPException
-from pydantic import BaseModel
+from fastapi import Depends, HTTPException
 from sqlmodel import Session, select
 from database import get_session
-from models.user import User
+from models_ import User
 from fastapi.security import OAuth2PasswordBearer
 from passlib.context import CryptContext
 from typing import Annotated
 from datetime import datetime, timedelta
 from jose import jwt, JWTError
+import os
 
- # TODO: replace for environment variable
-SECRET_KEY = "7507d63c4d554b2130d9d27468202a4060978ff7d3588323a6c15b2b58afa9fe"
-ALGORITHM = "HS256"
 
+JWT_SECRET_KEY = os.environ["JWT_SECRET_KEY"]
+JWT_ALGORITHM = os.environ["JWT_ALGORITHM"]
 crypt_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-oauth_scheme = OAuth2PasswordBearer(tokenUrl="token")
+oauth_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
 
 
 def authenticate_user(username: str, password: str, session: Session):
@@ -26,23 +25,24 @@ def authenticate_user(username: str, password: str, session: Session):
     return user
 
 
-def create_acess_token(username: str, user_id: int):
+def create_access_token(username: str, user_id: int):
     expire_time = datetime.now() + timedelta(days=14)
-    jwt_base = {"sub": username, "id": user_id, "exp": expire_time}
-    return jwt.encode(jwt_base, SECRET_KEY, ALGORITHM)
+    jwt_payload = {"sub": username, "id": user_id, "exp": expire_time}
+    print(jwt_payload)
+    return jwt.encode(jwt_payload, JWT_SECRET_KEY, JWT_ALGORITHM)
 
 
 def get_current_user(
     token: Annotated[str, Depends(oauth_scheme)], 
     session: Session = Depends(get_session)
-):
+) -> User:
     credentials_exception = HTTPException(
         status_code=401,
         detail="Could not validate credentials",
         headers={"WWW-Authenticate": "Bearer"},
     )
     try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        payload = jwt.decode(token, JWT_SECRET_KEY, algorithms=[JWT_ALGORITHM])
         username: str = payload.get("sub")
         user_id: int = payload.get("id")
         if username is None or user_id is None:

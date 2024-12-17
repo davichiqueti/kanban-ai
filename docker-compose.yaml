@@ -2,9 +2,10 @@
 services:
   api:
     build:
-      dockerfile: docker/Dockerfile
+      context: .
+    env_file:
+      - ./src/.env
     environment:
-      SECRET_KEY: "7507d63c4d554b2130d9d27468202a4060978ff7d3588323a6c15b2b58afa9fe"
       DATABASE_URL: "postgresql+psycopg2://admin:admin@database:5432/kanbanai"
     depends_on:
       - database

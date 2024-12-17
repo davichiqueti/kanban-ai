@@ -1,19 +1,18 @@
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
-from sqlmodel import Session, select
+from sqlmodel import Session
 from database import get_session
-from models.user import User, UserCreate, UserPublic
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from passlib.context import CryptContext
+from models_ import User, UserCreate, UserPublic
+from fastapi.security import OAuth2PasswordRequestForm
 from typing import Annotated
-from datetime import datetime, timedelta
-from jose import jwt, JWTError
+from utils.jwt_authentication import crypt_context, authenticate_user, create_access_token
 
 
 router = APIRouter()
 
+
 class Token(BaseModel):
-    acess_token: str
+    access_token: str
     token_type: str
 
 
@@ -26,10 +25,11 @@ async def create_user(user_form: UserCreate, session: Session = Depends(get_sess
     session.refresh(user)
     return user
 
-@router.post("/auth/token", response_model=Token)
-async def login_for_acess_token(form: Annotated[OAuth2PasswordRequestForm, Depends()], session: Session = Depends(get_session)):
+
+@router.post("/auth/login", response_model=Token)
+async def login_for_access_token(form: Annotated[OAuth2PasswordRequestForm, Depends()], session: Session = Depends(get_session)):
     user = authenticate_user(form.username, form.password, session)
     if not user:
         raise HTTPException(status_code=401)
-    token = create_acess_token(user.username, user.password)
-    return {"acess_token": token, "token_type": "bearer"}
+    token = create_access_token(user.username, user.id)
+    return {"access_token": token, "token_type": "bearer"}

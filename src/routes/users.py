@@ -1,13 +1,12 @@
 from fastapi import APIRouter, Depends
-from database import get_session
-from models.user import User
-from sqlmodel import Session, select
+from models_ import User, UserPublic
+from sqlmodel import select
+from utils.jwt_authentication import get_current_user
 
 
 router = APIRouter()
 
 
-@router.get("/users", response_model=list[User])
-async def get_users(*, session: Session = Depends(get_session)):
-    users = session.exec(select(User)).all()
-    return users
+@router.get("/users/me", response_model=UserPublic)
+async def get_user(user = Depends(get_current_user)):
+    return user

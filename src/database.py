@@ -1,5 +1,4 @@
 from sqlmodel import Session, SQLModel, create_engine
-from typing import Generator
 import os
 
 
