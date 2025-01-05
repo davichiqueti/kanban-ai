@@ -78,7 +78,7 @@ class BoardCard(SQLModel, table=True):
     updated_at: datetime = Field(default_factory=datetime.now, sa_column_kwargs={"onupdate": datetime.now})
     board_id: int = Field(default=None, foreign_key="board.id")
     board: Board = Relationship(back_populates="cards")
-    user_id: Optional[int] = Field(default=None, foreign_key="user.id")
+    responsible_id: Optional[int] = Field(default=None, foreign_key="user.id")
 
 
 class UserPublic(UserBase):
