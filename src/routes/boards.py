@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
-from models_ import Board, BoardUserLink, BoardUserRole, BoardCardPriority, BoardCardStatus, User
+from models_ import Board, BoardCard, BoardUserLink, BoardUserRole, BoardCardPriority, BoardCardStatus, User
 from database import get_session
 from sqlmodel import Session, select
 from utils.jwt_authentication import get_current_user
+from utils.report_generator import generate_board_report
 from typing import Optional
 from pydantic import BaseModel
 from datetime import datetime
@@ -16,17 +17,18 @@ class BoardCreate(BaseModel):
     description: Optional[str]
 
 
+class BoardUpdate(BaseModel):
+    name: Optional[str] = None
+    description: Optional[str] = None
+
+
 class BoardCardCreate(BaseModel):
     title: str
     description: Optional[str] = None
     status: BoardCardStatus = BoardCardStatus.BACKLOG
-    priority: Optional[BoardCardPriority]
-    created_at: datetime = Field(default_factory=datetime.now)
+    priority: Optional[BoardCardPriority] = None
     due_date: Optional[datetime] = None
-    updated_at: datetime = Field(default_factory=datetime.now, sa_column_kwargs={"onupdate": datetime.now})
-    board_id: int = Field(default=None, foreign_key="board.id")
-    board: Board = Relationship(back_populates="cards")
-    user_id: Optional[int] = Field(default=None, foreign_key="user.id")()
+
 
 class BoardResponse(BaseModel):
     id: int
@@ -51,7 +53,7 @@ async def get_user_boards(session: Session = Depends(get_session), user=Depends(
 async def create_board(board: BoardCreate, session: Session = Depends(get_session), user=Depends(get_current_user)):
     new_board = Board.model_validate(board)
     session.add(new_board)
-    session.commit(new_board)
+    session.commit()
     session.refresh(new_board)
     board_user_link = BoardUserLink(
         board_id=new_board.id,
@@ -63,8 +65,41 @@ async def create_board(board: BoardCreate, session: Session = Depends(get_sessio
     return new_board
 
 
+@router.put("/boards/{board_id}", response_model=BoardResponse)
+async def update_board(
+    board_id: int,
+    board_update: BoardUpdate,
+    session: Session = Depends(get_session),
+    current_user=Depends(get_current_user)
+):
+    board = session.exec(
+        select(Board)
+        .join(BoardUserLink)
+        .filter(
+            Board.id == board_id,
+            BoardUserLink.user_id == current_user.id,
+            BoardUserLink.role == BoardUserRole.OWNER
+        )
+    ).first()
+    if (not board):
+        raise HTTPException(status_code=404, detail="Board not found or you do not have permission to update it")
+    if (board_update.name):
+        board.name = board_update.name
+    if (board_update.description):
+        board.description = board_update.description
+    session.add(board)
+    session.commit()
+    session.refresh(board)
+    return board
+
+
 @router.post("/boards/{board_id}/cards", response_model=BoardResponse)
-async def add_board_member(board_id: int, card: session: Session = Depends(get_session), current_user=Depends(get_current_user)):
+async def add_board_card(
+    board_id: int,
+    card: BoardCardCreate,
+    session: Session = Depends(get_session),
+    current_user=Depends(get_current_user)
+):
     board = session.exec(
         select(Board)
         .join(BoardUserLink)
@@ -75,12 +110,16 @@ async def add_board_member(board_id: int, card: session: Session = Depends(get_s
     ).first()
     if (not board):
         raise HTTPException(status_code=404, detail="Board not found")
-    board_user_link = BoardUserLink(
-        board_id=board.id,
-        user_id=user.id,
-        role=BoardUserRole.COLLABORATOR
+    # Creating card
+    new_card = BoardCard(
+        title=card.title,
+        description=card.description,
+        status=card.status,
+        priority=card.priority,
+        due_date=card.due_date,
+        board_id=board.id
     )
-    session.add(board_user_link)
+    session.add(new_card)
     session.commit()
     return board
 
@@ -112,3 +151,24 @@ async def add_board_member(
     session.add(board_user_link)
     session.commit()
     return board
+
+
+@router.get("/boards/{board_id}/report", response_model=str)
+async def get_board_report(
+    board_id: int,
+    session: Session = Depends(get_session),
+    current_user=Depends(get_current_user)
+):
+    board = session.exec(
+        select(Board)
+        .filter(
+            Board.id == board_id,
+            BoardUserLink.user_id == current_user.id,
+            BoardUserLink.role == BoardUserRole.OWNER
+        )
+    ).first()
+    print(board)
+    if not board:
+        raise HTTPException(status_code=404, detail="Board not found")
+    report = generate_board_report(board)
+    return report
