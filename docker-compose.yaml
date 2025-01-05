@@ -1,16 +1,18 @@
 
 services:
-  api:
+  backend:
     build:
       context: .
+      dockerfile: backend.dockerfile
     env_file:
       - ./src/.env
     environment:
+      FRONTEND_URL: "http://localhost:3000"
       DATABASE_URL: "postgresql+psycopg2://admin:admin@database:5432/kanbanai"
     depends_on:
       - database
     networks:
-      - backend_network
+      - database-network
     ports:
       - "8000:8000"
     volumes:    # TODO: Remove this volume only used to faster development without re-building
@@ -25,7 +27,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
-      - backend_network
+      - database-network
     ports:
       - "5432:5432"
 
@@ -34,5 +36,5 @@ volumes:
     driver: local
 
 networks:
-  backend_network:
+  database-network:
     driver: bridge
