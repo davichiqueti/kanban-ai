@@ -1,4 +1,4 @@
-from models_ import Board
+from models import Board
 import requests
 import os
 import json

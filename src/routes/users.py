@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends
-from models_ import User, UserPublic
+from models import User, UserPublic
 from sqlmodel import select, Session
 from utils.jwt_authentication import get_current_user
 from database import get_session

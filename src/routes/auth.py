@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from sqlmodel import Session
 from database import get_session
-from models_ import User, UserCreate, UserPublic
+from models import User, UserCreate, UserPublic
 from fastapi.security import OAuth2PasswordRequestForm
 from typing import Annotated
 from utils.jwt_authentication import crypt_context, authenticate_user, create_access_token

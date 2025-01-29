@@ -1,7 +1,7 @@
 from fastapi import Depends, HTTPException
 from sqlmodel import Session, select
 from database import get_session
-from models_ import User
+from models import User
 from fastapi.security import OAuth2PasswordBearer
 from passlib.context import CryptContext
 from typing import Annotated
