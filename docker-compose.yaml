@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: backend.dockerfile
     env_file:
-      - ./src/.env
+      - ./backend/.env
     environment:
       FRONTEND_URL: "http://localhost:3000"
       DATABASE_URL: "postgresql+psycopg2://admin:admin@database:5432/kanbanai"
@@ -16,7 +16,7 @@ services:
     ports:
       - "8000:8000"
     volumes:    # TODO: Remove this volume only used to faster development without re-building
-      - ./src:/app
+      - ./backend:/app
 
   database:
     image: postgres:14
