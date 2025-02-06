@@ -15,7 +15,7 @@ app.include_router(boards_router)
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[os.environ["FRONTEND_URL"]],  # Adjust this to your frontend URL
+    allow_origins=[os.environ["FRONTEND_URL"]],  # TODO: adjust this to frontend URL
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
