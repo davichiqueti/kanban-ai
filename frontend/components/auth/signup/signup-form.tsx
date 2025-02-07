@@ -8,6 +8,9 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
+import { useRouter } from "next/navigation"
+import { signup } from "@/lib/services/userService";
+
 const formSchema = z.object({
   name: z
     .string({
@@ -28,11 +31,30 @@ const formSchema = z.object({
     .string({
       required_error: "Password is requiered."
     })
-    .min(7, { message: "Must have at least 7 characters." })
+    .min(4, { message: "Must have at least 4 characters." })
     .max(12),
 })
 
 export default function SignUp() {
+
+  const router = useRouter()
+
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+
+      console.log(values)
+      const result = await signup(values);
+
+      if (result) {
+        form.reset()
+        router.push("/")
+      }
+
+    } catch (error) {
+      console.log("Signup form", error)
+
+    }
+  };
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -44,7 +66,6 @@ export default function SignUp() {
     }
   })
 
-
   return (
     <div className="flex flex-col justify-center p-6 space-y-2
                         border rounded-xl shadow-2xl  ">
@@ -52,10 +73,7 @@ export default function SignUp() {
       <span>Create your account</span>
 
       <Form {...form}>
-        <form
-
-          className="flex flex-col space-y-2"
-        >
+        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col space-y-2">
           <FormField
             control={form.control}
             name="name"
@@ -63,12 +81,8 @@ export default function SignUp() {
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder=""
-                    {...field}
-                  />
+                  <Input placeholder="" {...field} />
                 </FormControl>
-                <FormDescription></FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -81,12 +95,22 @@ export default function SignUp() {
               <FormItem>
                 <FormLabel>Username</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder=""
-                    {...field}
-                  />
+                  <Input placeholder="" {...field} />
                 </FormControl>
-                <FormDescription></FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input type="email" placeholder="" {...field} />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
@@ -99,38 +123,17 @@ export default function SignUp() {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder=""
-                    {...field}
-                  />
+                  <Input type="password" placeholder="" {...field} />
                 </FormControl>
-                <FormDescription></FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder=""
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription></FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
 
-          <Button type="submit"> Login</Button>
+          <Button type="submit">Sign Up</Button>
 
         </form>
       </Form>
     </div>
-  )
+  );
 }
