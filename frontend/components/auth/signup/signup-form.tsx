@@ -45,6 +45,8 @@ export default function SignUp() {
       console.log(values)
       const result = await signup(values);
 
+      console.log(result)
+
       if (result) {
         form.reset()
         router.push("/")

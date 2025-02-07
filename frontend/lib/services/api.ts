@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: "http://localhost:8000", // mudar para prod
+    baseURL: "http://localhost:8000/api", // mudar para prod
     timeout: 5000,
     headers: {
       "Content-Type": "application/json",
