@@ -30,6 +30,11 @@ class BoardCardCreate(BaseModel):
     due_date: Optional[datetime] = None
 
 
+class BoardCardUpdate(BoardCardCreate):
+    title: Optional[str] = None
+    status: Optional[BoardCardStatus] = None
+
+
 class BoardResponse(BaseModel):
     id: int
     name: str
@@ -121,7 +126,66 @@ async def add_board_card(
     )
     session.add(new_card)
     session.commit()
+    session.refresh(board)
     return board
+
+
+@router.delete("/boards/{board_id}/cards/{card_id}", response_model=BoardResponse)
+async def delete_board_card(
+    board_id: int,
+    card_id: int,
+    session: Session = Depends(get_session),
+    current_user=Depends(get_current_user)
+):
+    card = session.exec(
+        select(BoardCard)
+        .join(Board)
+        .join(BoardUserLink)
+        .filter(
+            Board.id == board_id,
+            BoardCard.id == card_id,
+            BoardUserLink.board_id == board_id,
+            BoardUserLink.user_id == current_user.id
+        )
+    ).first()
+    if (not card):
+        raise HTTPException(status_code=404, detail="Board Card not found")
+    card_board = card.board
+    session.delete(card)
+    session.commit()
+    session.refresh(card_board)
+    return card_board
+
+
+@router.put("/boards/{board_id}/cards/{card_id}", response_model=BoardResponse)
+async def update_board_card(
+    board_id: int,
+    card_id: int,
+    card_update: BoardCardUpdate,
+    session: Session = Depends(get_session),
+    current_user=Depends(get_current_user)
+):
+    card = session.exec(
+        select(BoardCard)
+        .join(Board)
+        .join(BoardUserLink)
+        .filter(
+            Board.id == board_id,
+            BoardCard.id == card_id,
+            BoardUserLink.board_id == board_id,
+            BoardUserLink.user_id == current_user.id
+        )
+    ).first()
+    if (not card_update):
+        raise HTTPException(status_code=404, detail="Board Card not found or you do not have permission to update it")
+    for attr, value in card_update.model_dump().items():
+        if value is not None:
+            setattr(card, attr, value)
+    # Updating card in database and refreshing board
+    session.add(card)
+    session.commit()
+    session.refresh(card.board)
+    return card.board
 
 
 @router.put("/boards/{board_id}/user/{username}", response_model=BoardResponse)
