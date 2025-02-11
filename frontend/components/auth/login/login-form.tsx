@@ -31,9 +31,7 @@ export default function Login() {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
 
-      console.log(values)
       const result = await login(values);
-      console.log(result)
 
       if (result) {
         form.reset()
@@ -42,7 +40,6 @@ export default function Login() {
 
     } catch (error) {
       console.log("Login form", error)
-
     }
   };
 
@@ -53,7 +50,6 @@ export default function Login() {
       password: "",
     }
   })
-
 
   return (
     <div className="flex flex-col justify-center p-6 space-y-2

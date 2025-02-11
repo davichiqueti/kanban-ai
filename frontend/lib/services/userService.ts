@@ -15,7 +15,18 @@ export const signup = async (userData: { name: string, username: string, email: 
 export const login = async (userData: { username: string, password: string }) => {
 
   try {
-    const response = await api.post("/auth/login", userData);
+
+    const formData = new URLSearchParams();
+    formData.append("grant_type", "password");
+    formData.append("username", userData.username);
+    formData.append("password", userData.password);
+
+    const response = await api.post("/auth/login", formData, {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    });
+
     return response.data;
 
   } catch (error) {
