@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
 import { useRouter } from "next/navigation"
-import { login } from "@/lib/services/userService";
+import { login } from "@/lib/services/authService";
 
 const formSchema = z.object({
   username: z

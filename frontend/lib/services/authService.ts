@@ -27,6 +27,9 @@ export const login = async (userData: { username: string, password: string }) =>
       },
     });
 
+    const token = response.data.access_token
+    localStorage.setItem("token", token);
+    
     return response.data;
 
   } catch (error) {
