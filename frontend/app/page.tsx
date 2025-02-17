@@ -4,6 +4,9 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { getMyUser } from "@/lib/services/userServices";
 
+import Header from "@/components/header/header";
+
+
 interface User {
   name: string;
   username: string;
@@ -15,14 +18,14 @@ interface User {
 }
 
 export default function Home() {
-  const [user, setUser] = useState<User | null>(null); 
+  const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
 
   useEffect(() => {
     const getUser = async () => {
       try {
         const result = await getMyUser();
-        setUser(result); 
+        setUser(result);
       } catch (error) {
         console.error("Erro ao buscar usuário:", error);
         setUser(null);
@@ -37,21 +40,23 @@ export default function Home() {
   };
 
   return (
-    <div className="m-20">
-      <h1>Hello World</h1>
+    <>
+      <Header userInfo={user}></Header>
+      <div className="m-20">
 
-      {user ? (
-        <div>
-          <p>Nome: {user.name}</p>
-          <p>Usuário: {user.username}</p>
-          <p>Email: {user.email}</p>
-          <p>Status: {user.active ? "Ativo" : "Inativo"}</p>
-        </div>
-      ) : (
-        <p>Carregando usuário...</p>
-      )}
+        {user ? (
+          <div>
+            <p>Nome: {user.name}</p>
+            <p>Usuário: {user.username}</p>
+            <p>Email: {user.email}</p>
+            <p>Status: {user.active ? "Ativo" : "Inativo"}</p>
+          </div>
+        ) : (
+          <p>Carregando usuário...</p>
+        )}
 
-      <button onClick={handleClick}>Login</button>
-    </div>
+        <button onClick={handleClick}>Login</button>
+      </div>
+    </>
   );
 }

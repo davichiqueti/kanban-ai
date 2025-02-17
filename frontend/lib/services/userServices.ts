@@ -1,12 +1,9 @@
 
 import api from "./api"
 
-
-
 export const getMyUser = async () => {
 
     try{
-
         const token = localStorage.getItem("token")
 
         if (!token) {
@@ -14,19 +11,17 @@ export const getMyUser = async () => {
           }
 
         const response = await api.get("/users/me")
-
+        console.log(response.data)
         return response.data
 
     }catch(error){
-        
+      
     }
 }
-
 
 export const getOtherUser = async (username: {username: string}) => {
 
     try{
-
         const token = localStorage.getItem("token")
 
         if (!token) {
