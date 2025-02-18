@@ -7,7 +7,7 @@ import { getMyUser } from "@/lib/services/userServices";
 import Header from "@/components/header/header";
 
 
-interface User {
+export interface User {
   name: string;
   username: string;
   email: string;
