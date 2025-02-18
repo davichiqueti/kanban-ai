@@ -1,10 +1,13 @@
 "use client"
 
-import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { createBoard } from "@/lib/services/boardsServices"
 import { getMyUser } from "@/lib/services/userServices";
 
 import Header from "@/components/header/header";
+import CreateBoardButton from "@/components/boards/createBoardBtn"
+
+import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 
 
 export interface User {
@@ -35,29 +38,41 @@ export default function Home() {
     getUser();
   }, []);
 
-  const handleClick = () => {
+  const handleClickLogin = () => {
     router.push("/auth");
   };
 
-  
-  
+  const createBoard = async () => {
+
+    try{
+
+      const result = await createBoard()
+      console.log("page log: crated board", result)
+
+
+    } catch (error) {
+      console.error("Erro ao criar quadro:", error);
+    }
+
+  }
+
   return (
     <>
       <Header userInfo={user}></Header>
-      <div className="m-20">
+      <div className="ml-20 mr-20 bg-slate-100">
 
-        {user ? (
-          <div>
-            <p>Nome: {user.name}</p>
-            <p>Usuário: {user.username}</p>
-            <p>Email: {user.email}</p>
-            <p>Status: {user.active ? "Ativo" : "Inativo"}</p>
-          </div>
-        ) : (
-          <p>Carregando usuário...</p>
-        )}
+        <div className="pt-10 mb-20">
+          <h1>
+            <strong>Olá, {user?.name}</strong>. Que bom  ter você de volta! 😊
+          </h1>
+        </div>
 
-        <button onClick={handleClick}>Login</button>
+        <div>
+          <h1><strong>Meus Boards</strong></h1>
+
+          <CreateBoardButton></CreateBoardButton>
+        </div>
+        
       </div>
     </>
   );

@@ -11,11 +11,11 @@ export const getMyUser = async () => {
           }
 
         const response = await api.get("/users/me")
-        console.log(response.data)
+        console.log("Dados do Usuario",  response.data)
         return response.data
 
     }catch(error){
-      
+        console.error("Error getting your info", error)
     }
 }
 
@@ -33,6 +33,6 @@ export const getOtherUser = async (username: {username: string}) => {
         return response.data
 
     }catch(error){
-        
+        console.error("Error getting user", error)
     }
 }
