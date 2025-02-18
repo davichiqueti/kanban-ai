@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 
-import HeaderInfoModal from "./headerInfoModal";
+import HeaderDropdown from "./headerDropdown";
 
 export interface User {
     name: string;
@@ -20,25 +20,29 @@ interface HeaderProps {
 export default function Header({ userInfo }: HeaderProps) {
     const [modalOpen, setModalOpen] = useState(false);
 
-    const handleOpenModal = () => setModalOpen(true);
-    const handleCloseModal = () => setModalOpen(false);
 
     return (
-        <header className="flex flex-row justify-between pt-10 mb-0 pl-10 pr-10 bg-slate-300">
+        <header className="flex flex-row justify-between pt-10 mb-0 pl-10 pr-10 border-b-2 shadow-sm">
             <div>
                 <h1>Kanban.ai</h1>
             </div>
-            <div className="flex flex-row">
-                <p>Seja Bem-vindo, {userInfo?.name}</p>
-                <p 
+            <div
+                className="relative"
+                onMouseEnter={() => setModalOpen(true)}
+                onMouseLeave={() => setModalOpen(false)}
+            >
+                <p
                     className="ml-4 cursor-pointer text-blue-500 hover:underline"
-                    onClick={handleOpenModal}
-                >
-                    Perfil
-                </p>
+
+                >Perfil</p>
+
+                {modalOpen &&
+                    <HeaderDropdown userInfo={userInfo} setModalOpen={setModalOpen} />
+
+                }
             </div>
 
-            {modalOpen && <HeaderInfoModal openModal={modalOpen} closeModal={handleCloseModal} userInfo={userInfo} />}
         </header>
     );
 }
+

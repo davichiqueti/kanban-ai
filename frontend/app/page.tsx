@@ -39,6 +39,8 @@ export default function Home() {
     router.push("/auth");
   };
 
+  
+  
   return (
     <>
       <Header userInfo={user}></Header>
