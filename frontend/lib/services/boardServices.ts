@@ -18,3 +18,21 @@ export const createBoard = async (boardData: {name: string, description: string}
         console.error("Error creating board", error)
     }
 }
+
+export const getMyBoards = async () => {
+
+    try{
+        const token = localStorage.getItem("token")
+
+        if (!token) {
+            throw new Error("Token de autenticação não encontrado");
+          }
+
+        const response = await api.get("/boards")
+        console.log("Meus boards ", response.data)
+        return response.data
+
+    }catch(error){
+        console.error("Error creating board", error)
+    }
+} 
