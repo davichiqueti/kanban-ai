@@ -4,11 +4,6 @@ import api from "./api"
 export const createBoard = async (boardData: {name: string, description: string}) => {
 
     try{
-        const token = localStorage.getItem("token")
-
-        if (!token) {
-            throw new Error("Token de autenticação não encontrado");
-          }
 
         const response = await api.post("/boards", boardData)
         console.log("Board criado ", response.data)
@@ -22,11 +17,6 @@ export const createBoard = async (boardData: {name: string, description: string}
 export const getMyBoards = async () => {
 
     try{
-        const token = localStorage.getItem("token")
-
-        if (!token) {
-            throw new Error("Token de autenticação não encontrado");
-          }
 
         const response = await api.get("/boards")
         console.log("Meus boards ", response.data)
