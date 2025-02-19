@@ -1,5 +1,5 @@
 
-import { Board } from "@/app/page";
+import { Board } from "@/app/(private)/page";
 import { useRouter } from "next/navigation";
 
 interface MyBoardsGridprops {
