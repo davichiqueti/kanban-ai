@@ -28,7 +28,9 @@ export const login = async (userData: { username: string, password: string }) =>
     });
 
     const token = response.data.access_token
-    localStorage.setItem("token", token);
+    console.log("token da req:", token)
+    document.cookie = `token=${token}; Path=/; Secure; SameSite=Strict`;
+
     
     return response.data;
 
