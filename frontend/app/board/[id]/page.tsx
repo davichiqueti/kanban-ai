@@ -43,4 +43,22 @@ export default function Board() {
 
     }, [id]);
 
+    if (loading) {
+        return <p className="text-center text-gray-500">Carregando board...</p>;
+      }
+    
+      if (!board) {
+        return <p className="text-center text-red-500">Board não encontrado.</p>;
+      }
+    
+      return (
+        <div className="p-6">
+          <h1 className="text-2xl font-bold">{board.name}</h1>
+          <p className="text-gray-600">{board.description}</p>
+          <p className="text-xs text-gray-400">
+            Criado em: {new Date(board.created_at).toLocaleDateString()}
+          </p>
+        </div>
+      );
+
 }
