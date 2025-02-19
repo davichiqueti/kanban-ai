@@ -17,7 +17,6 @@ export function middleware(request: NextRequest) {
     const publicRoute =  publicRoutes.find(route => route.path === path)
 
     const token = request.cookies.get("token")?.value
-    console.log("Token no Middleware:",token)
 
     if ( !token && publicRoute ) return NextResponse.next()
 
@@ -36,8 +35,12 @@ export function middleware(request: NextRequest) {
 
         return NextResponse.redirect(redirectUrl)
     }
-        
 
+    if ( token  && !publicRoute ){
+        //  chekc if token is not expired
+
+        return NextResponse.next()
+    }
 
     return NextResponse.next()
 }
