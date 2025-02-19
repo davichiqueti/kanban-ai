@@ -1,6 +1,6 @@
 "use client"
 
-import { createBoard } from "@/lib/services/boardsServices"
+import { createBoard } from "@/lib/services/boardServices"
 import { getMyUser } from "@/lib/services/userServices";
 
 import Header from "@/components/header/header";
