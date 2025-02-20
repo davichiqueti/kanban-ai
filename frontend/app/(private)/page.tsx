@@ -10,24 +10,10 @@ import MyBoardsGrid from "@/components/boards/homePage/myBoardsGrid"
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
-export interface User {
-  name: string;
-  username: string;
-  email: string;
-  active: boolean;
-  created_at: string;
-  updated_at: string;
-  id: string;
-}
+import { User } from "@/types/user/userType"
+import { Board } from "@/types/board/boardtype"
 
-export interface Board {
-  id: number;
-  name: string;
-  description: string;
-  created_at: string;
-  user_links: any[];
-  cards: any[];
-}
+
 
 export default function Home() {
   const [user, setUser] = useState<User | null>(null);

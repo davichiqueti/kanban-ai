@@ -7,16 +7,10 @@ import { getMyBoards } from "@/lib/services/boardServices"
 import CreateBoardButton from "@/components/cards/createCardBtn"
 import KanbanBoard from "@/components/boards/boardsPage/kanbanBoard"
 
-export interface Board {
-  id: number;
-  name: string;
-  description: string;
-  created_at: string;
-  user_links: any[];
-  cards: any[];
-}
+import { Board } from "@/types/board/boardtype"
 
-export default function Board() {
+
+export default function BoardPage() {
   const { id } = useParams();
   const [board, setBoard] = useState<Board | null>(null);
   const [loading, setLoading] = useState(true);

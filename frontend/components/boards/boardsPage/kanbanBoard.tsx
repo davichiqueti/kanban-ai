@@ -1,37 +1,9 @@
 
 import { useState, useEffect } from "react"
 
-export type Id = string | number
+import { Board } from "@/types/board/boardtype"
+import { Card, BoardCardStatus, Column } from "@/types/card/cardType"
 
-export type BoardCardStatus = "backlog" | "to do" | "doing" | "review" | "done";
-
-export type Card = {
-    id: Id;
-    title: string;
-    description?: string;
-    status: BoardCardStatus;
-    due_date?: string;
-    priority?: number;
-    responsible_id?: Id | null;
-    created_at: string;
-    updated_at: string;
-    board_id: Id;
-  };
-
-  export interface Board {
-    id: number;
-    name: string;
-    description: string;
-    created_at: string;
-    user_links: any[];
-    cards: any[];
-  }
-
-export type Column = {
-    id: BoardCardStatus;
-    title: string;
-    cards: Card[];
-};
 
 const columnTitles: Record<BoardCardStatus, string> = {
     backlog: "Backlog",
@@ -56,8 +28,7 @@ export default function KanbanBoard({ board }: KanbanBoardProps) {
             title: columnTitles[status as BoardCardStatus],
             cards: [],
           }));
-    
-          
+
           board.cards.forEach((card: Card) => {
             const columnIndex = initialColumns.findIndex((col) => col.id === card.status);
             if (columnIndex !== -1) {
@@ -68,8 +39,6 @@ export default function KanbanBoard({ board }: KanbanBoardProps) {
           setColumns(initialColumns);
         }
       }, [board]);
-
-
 
 
     return (
@@ -91,4 +60,3 @@ export default function KanbanBoard({ board }: KanbanBoardProps) {
     </div>
     )
 }
-

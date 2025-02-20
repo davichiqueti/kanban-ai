@@ -3,16 +3,8 @@ import { useState } from "react";
 
 import HeaderDropdown from "./headerDropdown";
 
-export interface User {
-    name: string;
-    username: string;
-    email: string;
-    active: boolean;
-    created_at: string;
-    updated_at: string;
-    id: string;
-}
-
+import { User } from "@/types/user/userType"
+ 
 interface HeaderProps {
     userInfo: User | null;
 }

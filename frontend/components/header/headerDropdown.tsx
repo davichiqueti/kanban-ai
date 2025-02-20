@@ -1,5 +1,5 @@
 
-import { User } from "./header";
+import { User } from "@/types/user/userType";
 
 import { useRouter } from "next/navigation";
 
