@@ -4,7 +4,7 @@ import { addBoardCard } from "@/lib/services/cardServices";
 
 interface CreateCardModalProps {
     onClose: () => void;
-    boardId: string | string[] | undefined;
+    boardId: number
 }
 
 export default function CreateCardModal({ onClose, boardId }: CreateCardModalProps) {

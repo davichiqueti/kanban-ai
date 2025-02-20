@@ -4,10 +4,10 @@ import { useState } from "react";
 import CreateCardModal from "./createCardModal";
 
 interface CreateBoardButtonProps {
-    boardId: string | string[] | undefined
+    boardId: number
 }
 
-export default function CreateBoardButton({ boardId }: CreateBoardButtonProps) {
+export default function CreateardButton({ boardId }: CreateBoardButtonProps) {
     const [modalOpen, setModalOpen] = useState<boolean>(false)
 
     const handleCloseModal = () => setModalOpen(false)

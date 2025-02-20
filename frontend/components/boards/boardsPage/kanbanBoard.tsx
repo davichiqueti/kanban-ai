@@ -5,6 +5,8 @@ import { Board } from "@/types/board/boardtype"
 import { Card, BoardCardStatus, Column } from "@/types/card/cardType"
 
 import CardComponent from "@/components/cards/boardCard/cardComponent"
+import CreateardButton from "@/components/cards/createCard/createCardBtn"
+
 
 
 const columnTitles: Record<BoardCardStatus, string> = {
@@ -44,30 +46,32 @@ export default function KanbanBoard({ board }: KanbanBoardProps) {
 
 
   return (
-    <div className="flex gap-4 p-4 overflow-x-auto">
 
-      {columns.map((column) => (
+    <>
+      <CreateardButton boardId={board.id} />
 
-        <div key={column.id} className="bg-gray-200 p-4 rounded-md w-1/5">
+      <div className="flex gap-2 p-4 overflow-x-auto">
+        {columns.map((column) => (
 
-          <h2 className="font-bold text-lg mb-2">{column.title}</h2>
+          <div key={column.id} className="bg-gray-200 p-2 pt-3 rounded-md w-1/5">
 
-          <div className="space-y-3">
-            {column.cards.map((card) => (
+            <h2 className="font-bold text-lg mb-2 ">{column.title}</h2>
 
-              <div key={card.id} >
+            <div className="space-y-3">
+              {column.cards.map((card) => (
 
-                <CardComponent key={card.id} card={card} />
+                <div key={card.id} >
+                  <CardComponent key={card.id} card={card} />
+                </div>
 
-              </div>
+              ))}
 
-            ))}
-
+            </div>
           </div>
-        </div>
 
-      ))}
+        ))}
 
-    </div>
+      </div>
+    </>
   )
 }
