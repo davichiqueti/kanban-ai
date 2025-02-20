@@ -3,7 +3,6 @@ import { useState } from "react";
 
 import CreateCardModal from "./createCardModal";
 
-
 interface CreateBoardButtonProps {
     boardId: string | string[] | undefined
 }
@@ -25,7 +24,7 @@ export default function CreateBoardButton({ boardId }: CreateBoardButtonProps) {
                 <p>Novo Card</p>
             </button>
 
-            {modalOpen && <CreateCardModal onClose={handleCloseModal} />}
+            {modalOpen && <CreateCardModal onClose={handleCloseModal} boardId={boardId} />}
 
 
         </>

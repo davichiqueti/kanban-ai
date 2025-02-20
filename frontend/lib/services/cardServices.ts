@@ -3,7 +3,7 @@ import api from "./api"
 
 
 export const addBoardCard = async ( 
-                                    cardId: {id: number}, 
+                                    cardId: number, 
                                     cardData: {title: string, description: string, status: string, priority: number, due_date: Date}
                                 ) => {
 
