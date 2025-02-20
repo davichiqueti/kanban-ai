@@ -4,8 +4,8 @@ import { getMyBoards } from "@/lib/services/boardServices";
 import { getMyUser } from "@/lib/services/userServices";
 
 import Header from "@/components/header/header";
-import CreateBoardButton from "@/components/boards/createBoardBtn";
-import MyBoardsGrid from "@/components/boards/myBoardsGrid"
+import CreateBoardButton from "@/components/boards/homePage/createBoard/createBoardBtn";
+import MyBoardsGrid from "@/components/boards/homePage/myBoardsGrid"
 
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
