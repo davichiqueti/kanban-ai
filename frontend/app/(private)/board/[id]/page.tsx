@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 
 import { getMyBoards } from "@/lib/services/boardServices"
+import CreateBoardButton from "@/components/cards/createCardBtn"
 
 export interface Board {
     id: number;
@@ -58,6 +59,9 @@ export default function Board() {
           <p className="text-xs text-gray-400">
             Criado em: {new Date(board.created_at).toLocaleDateString()}
           </p>
+
+        <CreateBoardButton boardId={id} />
+
         </div>
       );
 
