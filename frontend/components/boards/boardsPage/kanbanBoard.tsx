@@ -47,20 +47,32 @@ export default function KanbanBoard({ board }: KanbanBoardProps) {
 
   return (
 
-    <>
-      <CreateardButton boardId={board.id} />
+    <div className="flex flex-col h-full">
 
-      <div className="flex gap-2 p-4 overflow-x-auto">
+    <div className="ml-2">
+      <CreateardButton boardId={board.id} />
+    </div>
+
+      <div className="flex gap-2 flex-grow overflow-x-auto">
         {columns.map((column) => (
 
-          <div key={column.id} className="bg-gray-200 p-2 pt-3 rounded-md w-1/5">
+          <div key={column.id} className="p-2 pt-3 w-1/5">
 
-            <h2 className="font-bold text-lg mb-2 ">{column.title}</h2>
+            <div className="flex justify-normal text-md mb-2 pl-2 py-1 border-2 rounded-md">
+ 
+              <h2 className="mr-3" >{column.title}</h2>
+              <span className="">
+                <span className="bg-slate-300 p-1 rounded-full">
+                  {column.cards.length}
+                </span>
+              </span>
 
-            <div className="space-y-3">
+            </div>
+
+            <div className="bg-slate-200 space-y-3 p-3 rounded-md flex-grow">
               {column.cards.map((card) => (
 
-                <div key={card.id} >
+                <div key={card.id}  >
                   <CardComponent key={card.id} card={card} />
                 </div>
 
@@ -72,6 +84,6 @@ export default function KanbanBoard({ board }: KanbanBoardProps) {
         ))}
 
       </div>
-    </>
+    </div>
   )
 }

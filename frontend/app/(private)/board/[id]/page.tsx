@@ -46,9 +46,9 @@ export default function BoardPage() {
   }
 
   return (
-    <div className="p-6">
+    <div className="flex flex-col h-screen p-6 bg-gray-50">
 
-      <div>
+      <div className="mb-4">
 
         <h1 className="text-2xl font-bold">{board.name}</h1>
         <p className="text-gray-600">{board.description}</p>
@@ -59,7 +59,7 @@ export default function BoardPage() {
       </div>
 
 
-      <div>
+      <div className="flex-grow overflow-auto">
 
         <KanbanBoard board={board} />
 

@@ -12,16 +12,19 @@ export default function CardComponent({ card }: CardProps) {
   return (
     <>
       <div
-        className="bg-white p-2 rounded shadow cursor-pointer"
+        className="bg-white p-2 rounded shadow cursor-pointer h-28"
+
         onClick={() => setIsModalOpen(true)}
       >
-        <h3 className="font-medium">{card.title}</h3>
-        {card.description && <p className="text-sm">{card.description}</p>}
+
+        <h3 className="font-normal"><strong>{card.title}</strong></h3>
+
         {card.due_date && (
           <p className="text-xs text-gray-500">
             Due: {new Date(card.due_date).toLocaleDateString()}
           </p>
         )}
+
       </div>
 
       {isModalOpen && (
