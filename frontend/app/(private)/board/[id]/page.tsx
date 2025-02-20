@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 
 import { getMyBoards } from "@/lib/services/boardServices"
-import CreateBoardButton from "@/components/cards/createCardBtn"
+import CreateBoardButton from "@/components/cards/createCard/createCardBtn"
 import KanbanBoard from "@/components/boards/boardsPage/kanbanBoard"
 
 import { Board } from "@/types/board/boardtype"
@@ -23,7 +23,6 @@ export default function BoardPage() {
         const pageBoard = allBoards.find((b: Board) => String(b.id) === id);
 
         if (pageBoard) {
-          console.log(pageBoard)
           setBoard(pageBoard);
         } else {
           console.error("Board não encontrado.");
@@ -35,9 +34,9 @@ export default function BoardPage() {
       }
     };
 
-    if (id) fetchBoard();
-
+    if (id) fetchBoard()
   }, [id]);
+
 
   if (loading) {
     return <p className="text-center text-gray-500">Carregando board...</p>;

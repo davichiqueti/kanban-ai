@@ -6,8 +6,8 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs"
 
-import Login from "@/components/auth/login/login-form"
-import SignUp from "@/components/auth/signup/signup-form"
+import Login from "@/components/auth/login/loginForm"
+import SignUp from "@/components/auth/signup/signupForm"
 
 export default function Auth(){
 
