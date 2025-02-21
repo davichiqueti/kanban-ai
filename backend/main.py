@@ -9,9 +9,9 @@ import os
 
 app = FastAPI(root_path="/api")
 app.add_event_handler("startup", create_db_and_tables)
-app.include_router(auth_router)
-app.include_router(users_router)
-app.include_router(boards_router)
+app.include_router(auth_router, tags=["Auth"])
+app.include_router(users_router, tags=["Users"])
+app.include_router(boards_router, tags=["Boards"])
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
