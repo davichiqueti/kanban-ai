@@ -35,6 +35,14 @@ class BoardCardUpdate(BoardCardCreate):
     status: Optional[BoardCardStatus] = None
 
 
+class BoardSummaryResponse(BaseModel):
+    id: int
+    name: str
+    description: Optional[str]
+    created_at: datetime
+    card_count: int
+
+
 class BoardResponse(BaseModel):
     id: int
     name: str
@@ -44,14 +52,25 @@ class BoardResponse(BaseModel):
     cards: list
 
 
-@router.get("/boards", response_model=list[BoardResponse])
+@router.get("/boards", response_model=list[BoardSummaryResponse])
 async def get_user_boards(session: Session = Depends(get_session), user=Depends(get_current_user)):
     boards = session.exec(
         select(Board)
         .join(BoardUserLink)
         .filter(BoardUserLink.user_id == user.id)
     ).all()
-    return boards
+    board_summaries = list()
+    for board in boards:
+        board_summaries.append(
+            BoardSummaryResponse(
+                id=board.id,
+                name=board.name,
+                description=board.description,
+                created_at=board.created_at,
+                card_count=len(board.cards)
+            )
+        )
+    return board_summaries
 
 
 @router.get("/boards/{board_id}", response_model=BoardResponse)
@@ -61,6 +80,8 @@ async def get_user_board(board_id: int, session: Session = Depends(get_session),
         .join(BoardUserLink)
         .filter(Board.id == board_id, BoardUserLink.user_id == user.id)
     ).first()
+    if not board:
+        raise HTTPException(status_code=404, detail="Board not found or you do not have access to it")
     return board
 
 
