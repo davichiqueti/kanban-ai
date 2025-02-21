@@ -54,6 +54,16 @@ async def get_user_boards(session: Session = Depends(get_session), user=Depends(
     return boards
 
 
+@router.get("/boards/{board_id}", response_model=BoardResponse)
+async def get_user_board(board_id: int, session: Session = Depends(get_session), user=Depends(get_current_user)):
+    board = session.exec(
+        select(Board)
+        .join(BoardUserLink)
+        .filter(Board.id == board_id, BoardUserLink.user_id == user.id)
+    ).first()
+    return board
+
+
 @router.post("/boards", response_model=BoardResponse)
 async def create_board(board: BoardCreate, session: Session = Depends(get_session), user=Depends(get_current_user)):
     new_board = Board.model_validate(board)
