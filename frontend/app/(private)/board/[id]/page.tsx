@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 
-import { getMyBoards } from "@/lib/services/boardServices"
+import { getBoardById } from "@/lib/services/boardServices"
 import KanbanBoard from "@/components/boards/boardsPage/kanbanBoard"
 
 import { Board } from "@/types/board/boardtype"
@@ -18,11 +18,10 @@ export default function BoardPage() {
   useEffect(() => {
     const fetchBoard = async () => {
       try {
-        const allBoards = await getMyBoards()
-        const pageBoard = allBoards.find((b: Board) => String(b.id) === id);
+        const board = await getBoardById(Number(id))
 
-        if (pageBoard) {
-          setBoard(pageBoard);
+        if (board) {
+          setBoard(board);
         } else {
           console.error("Board não encontrado.");
         }

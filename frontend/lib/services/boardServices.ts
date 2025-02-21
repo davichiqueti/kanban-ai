@@ -22,3 +22,14 @@ export const getMyBoards = async () => {
         console.error("Error creating board", error)
     }
 } 
+
+export const getBoardById = async ( boardId: number ) => {
+
+    try {
+        const response = await api.get(`/boards/${boardId}`)
+        return response.data
+
+    } catch (error) {
+        console.error("Erro ao pegar informações do board.", error)
+    }
+}
