@@ -4,7 +4,6 @@ import { getMyBoards } from "@/lib/services/boardServices";
 import { getMyUser } from "@/lib/services/userServices";
 
 import Header from "@/components/header/header";
-import CreateBoardButton from "@/components/boards/homePage/createBoard/createBoardBtn";
 import MyBoardsGrid from "@/components/boards/homePage/myBoardsGrid"
 
 import { useRouter } from "next/navigation";
@@ -40,6 +39,19 @@ export default function Home() {
     fetchUserAndBoards();
   }, []);
 
+  const handleCreateBoard = async () => {
+    const fetchCreatedBoard = async () => {
+      try {
+        const result = await getMyBoards()
+        setBoards(result)
+
+      } catch (error) {
+        console.error("Error ao atualizar os boards: ", error)
+      }
+    }
+
+  }
+
   return (
     <>
 
@@ -54,13 +66,12 @@ export default function Home() {
         </div>
 
         <div>
-          <CreateBoardButton />
 
           <h1>
             <strong>Meus Boards</strong>
           </h1>
 
-          <MyBoardsGrid boards={boards} />
+          <MyBoardsGrid boards={boards} onNewBoard={handleCreateBoard} />
           
         </div>
       </div>

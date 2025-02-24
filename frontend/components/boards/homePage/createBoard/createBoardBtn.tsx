@@ -4,7 +4,11 @@ import CreateBoardModal from "./createBoardModal"
 
 import { IoIosAddCircleOutline } from "react-icons/io";
 
-export default function CreateBoardButton() {
+interface CreateBoardButtonProps {
+    onNewBoard: () => void
+}
+
+export default function CreateBoardButton({ onNewBoard }: CreateBoardButtonProps) {
     const [modalOpen, setModalOpen] = useState<boolean>(false)
 
     const handleCloseModal = () => setModalOpen(false)
@@ -22,7 +26,7 @@ export default function CreateBoardButton() {
                 <p>Novo Board</p>
             </button>
 
-            {modalOpen &&  <CreateBoardModal onClose={handleCloseModal}  /> }
+            {modalOpen &&  <CreateBoardModal onClose={handleCloseModal} onNewBoard={onNewBoard} /> }
         </>
     )
 }

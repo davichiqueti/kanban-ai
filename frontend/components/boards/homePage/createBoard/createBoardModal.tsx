@@ -5,9 +5,10 @@ import { createBoard } from "@/lib/services/boardServices"
 
 interface CreateBoardModalProps {
     onClose: () => void;
+    onNewBoard: () => void
 }
 
-export default function CreateBoardModal({ onClose }: CreateBoardModalProps) {
+export default function CreateBoardModal({ onClose, onNewBoard }: CreateBoardModalProps) {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
 
@@ -20,6 +21,8 @@ export default function CreateBoardModal({ onClose }: CreateBoardModalProps) {
             const response = await createBoard(data);
 
             console.log("Board criado log", response);
+
+            onNewBoard()
             onClose();
 
         } catch (error) {
