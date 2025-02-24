@@ -5,9 +5,7 @@ import { Board } from "@/types/board/boardtype"
 import { Card, BoardCardStatus, Column } from "@/types/card/cardType"
 
 import CardComponent from "@/components/cards/boardCard/cardComponent"
-import CreateardButton from "@/components/cards/createCard/createCardBtn"
-
-
+import CreateCardButton from "@/components/cards/createCard/createCardBtn"
 
 const columnTitles: Record<BoardCardStatus, string> = {
   backlog: "Backlog",
@@ -19,9 +17,11 @@ const columnTitles: Record<BoardCardStatus, string> = {
 
 interface KanbanBoardProps {
   board: Board,
+  onBoardChange: () => void
 }
 
-export default function KanbanBoard({ board }: KanbanBoardProps) {
+
+export default function KanbanBoard({ board, onBoardChange }: KanbanBoardProps) {
   const [columns, setColumns] = useState<Column[]>([])
 
   useEffect(() => {
@@ -44,13 +44,12 @@ export default function KanbanBoard({ board }: KanbanBoardProps) {
     }
   }, [board]);
 
-
   return (
 
     <div className="flex flex-col h-full">
 
     <div className="ml-2">
-      <CreateardButton boardId={board.id} />
+      <CreateCardButton boardId={board.id} onBoardChange={onBoardChange} />
     </div>
 
       <div className="flex gap-2 flex-grow overflow-x-auto">

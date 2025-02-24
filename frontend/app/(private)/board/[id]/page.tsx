@@ -35,6 +35,23 @@ export default function BoardPage() {
     if (id) fetchBoard()
   }, [id]);
 
+  const handleBoardChange = async ()  => {
+    const fetchBoard = async () => {
+      try {
+        const board = await getBoardById(Number(id))
+
+        if (board) {
+          setBoard(board);
+        } else {
+          console.error("Board não encontrado.");
+        }
+      } catch (error) {
+        console.error("Erro ao buscar boards:", error);
+      }
+    };
+    fetchBoard()
+  }
+
 
   if (loading) {
     return <p className="text-center text-gray-500">Carregando board...</p>;
@@ -60,8 +77,7 @@ export default function BoardPage() {
 
       <div className="flex-grow overflow-auto">
 
-        <KanbanBoard board={board} />
-
+        <KanbanBoard board={board} onBoardChange={handleBoardChange}  />
 
       </div>
 

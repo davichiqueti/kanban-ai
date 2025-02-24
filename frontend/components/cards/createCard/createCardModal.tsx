@@ -1,13 +1,19 @@
+
 import { useState } from "react";
 
 import { addBoardCard } from "@/lib/services/cardServices";
 
+import { Card } from "@/types/card/cardType"
+
+
 interface CreateCardModalProps {
     onClose: () => void;
-    boardId: number
+    boardId: number;
+    onBoardChange: () => void
+
 }
 
-export default function CreateCardModal({ onClose, boardId }: CreateCardModalProps) {
+export default function CreateCardModal({ onClose, boardId, onBoardChange }: CreateCardModalProps) {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [status, setStatus] = useState("backlog");
@@ -34,9 +40,11 @@ export default function CreateCardModal({ onClose, boardId }: CreateCardModalPro
             };
 
             const response = await addBoardCard(id, cardData);
-
             console.log("Card criado com sucesso:", response);
+
+            onBoardChange()
             onClose();
+
         } catch (error) {
             console.error("Erro ao criar card", error);
         }

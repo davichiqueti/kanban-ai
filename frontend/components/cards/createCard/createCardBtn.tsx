@@ -3,11 +3,13 @@ import { useState } from "react";
 
 import CreateCardModal from "./createCardModal";
 
+
 interface CreateBoardButtonProps {
-    boardId: number
+    boardId: number,
+    onBoardChange: () => void
 }
 
-export default function CreateardButton({ boardId }: CreateBoardButtonProps) {
+export default function CreateCardButton({ boardId, onBoardChange }: CreateBoardButtonProps) {
     const [modalOpen, setModalOpen] = useState<boolean>(false)
 
     const handleCloseModal = () => setModalOpen(false)
@@ -24,7 +26,7 @@ export default function CreateardButton({ boardId }: CreateBoardButtonProps) {
                 <p>Novo Card</p>
             </button>
 
-            {modalOpen && <CreateCardModal onClose={handleCloseModal} boardId={boardId} />}
+            {modalOpen && <CreateCardModal onClose={handleCloseModal} boardId={boardId} onBoardChange={onBoardChange} />}
 
 
         </>
