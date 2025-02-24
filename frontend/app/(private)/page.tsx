@@ -49,7 +49,7 @@ export default function Home() {
         console.error("Error ao atualizar os boards: ", error)
       }
     }
-
+    fetchCreatedBoard()
   }
 
   return (
