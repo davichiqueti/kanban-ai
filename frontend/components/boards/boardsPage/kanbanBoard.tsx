@@ -52,7 +52,7 @@ export default function KanbanBoard({ board, onBoardChange }: KanbanBoardProps) 
       <CreateCardButton boardId={board.id} onBoardChange={onBoardChange} />
     </div>
 
-      <div className="flex gap-2 flex-grow overflow-x-auto ">
+      <div className="flex flex-grow overflow-x-auto ">
         {columns.map((column) => (
 
           <div key={column.id} className="p-2 pt-3 w-1/5 flex flex-col">

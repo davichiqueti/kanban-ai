@@ -9,6 +9,14 @@ interface CardProps {
 export default function CardComponent({ card }: CardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const priorityMap: Record<number, { text: string; color: string }> = {
+    1: { text: "Low", color: "bg-blue-200" },
+    2: { text: "Medium", color: "bg-yellow-300" },
+    3: { text: "High", color: "bg-green-400" },
+  };
+
+  const priority = priorityMap[card.priority ?? 0] || { text: "Desconhecida", color: "bg-gray-500" };
+
   return (
     <>
       <div
@@ -24,6 +32,10 @@ export default function CardComponent({ card }: CardProps) {
             Due: {new Date(card.due_date).toLocaleDateString()}
           </p>
         )}
+
+        <span className={`px-2 py-1 rounded text-white ${priority.color}`}>
+          {priority.text}
+        </span>
 
       </div>
 
