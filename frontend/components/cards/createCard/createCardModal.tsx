@@ -100,9 +100,9 @@ export default function CreateCardModal({ onClose, boardId, onBoardChange }: Cre
                         onChange={(e) => setPriority(Number(e.target.value))}
                         required
                     >
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
+                        <option value="1">Low</option>
+                        <option value="2">Medium</option>
+                        <option value="3">High</option>
                     </select>
 
 

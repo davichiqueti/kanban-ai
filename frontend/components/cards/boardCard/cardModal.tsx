@@ -1,4 +1,8 @@
+
 import { Card } from "@/types/card/cardType";
+import { useState } from "react"
+
+import { updateBoardCard } from "@/lib/services/cardServices"
 
 interface CardModalProps {
   card: Card;
@@ -6,10 +10,45 @@ interface CardModalProps {
 }
 
 export default function CardModal({ card, onClose }: CardModalProps) {
+  const [titleField, setTitleField] = useState("")
+  const [descriptionField, setDescriptionField] = useState("")
+  const [statusField, setstatusField] = useState("")
+  const [priorityField, setPriorityField] = useState("")
+  const [dueDateField, setDueDateField] = useState("")
+
+
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [status, setStatus] = useState("");
+  const [priority, setPriority] = useState("");
+  const [dueDate, setDueDate] = useState("");
+
+
+  const handleUpdateCard = async () => {
+
+    try {
+
+      const updateData = {"title":"titul"}
+
+      const response = await updateBoardCard( card.board_id, card.id, updateData )
+
+
+    } catch (error) {
+      console.error("Erro updating card: ", error)
+    }
+  }
+  
   return (
+
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+
       <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
-        <h2 className="text-xl font-bold mb-2">{card.title}</h2>
+
+      <div>
+        <p>{card.title}</p>
+        <button  ></button>
+      </div>
+
         <p className="text-sm text-gray-700 mb-4">{card.description}</p>
 
         {card.due_date && (

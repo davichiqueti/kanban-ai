@@ -22,6 +22,7 @@ export default function BoardPage() {
 
         if (board) {
           setBoard(board);
+          console.log(board.id ,board.cards)
         } else {
           console.error("Board não encontrado.");
         }
