@@ -23,8 +23,8 @@ export const updateBoardCard = async (
 ) => {
 
     try {
-        const response = await api.post(`/boards/${boardId}/cards/${cardId}`, cardData)
-        console.log("Response: card updated: ", response.data)
+
+        const response = await api.put(`/boards/${boardId}/cards/${cardId}`, cardData)
         return response.data
 
     } catch (error) {
