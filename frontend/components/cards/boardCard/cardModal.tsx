@@ -18,17 +18,16 @@ export default function CardModal({ card, onClose }: CardModalProps) {
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [priority, setPriority] = useState("")
+  const [priority, setPriority] = useState<number>()
 
 
-  const handleUpdateCard = async (field: string, value: string) => {
+  const handleUpdateCard = async (field: string, value: string | number ) => {
 
     try {
 
       const updateData = { [field]: value };
 
       const response = await updateBoardCard(card.board_id, card.id, updateData)
-      console.log(response)
 
     } catch (error) {
       console.error("Erro updating card: ", error)
@@ -173,8 +172,8 @@ export default function CardModal({ card, onClose }: CardModalProps) {
                     id="low"
                     name="priority"
                     value="1"
-                    checked={priority === "1"}
-                    onChange={(e) => setPriority(e.target.value)}
+                    checked={priority === 1}
+                    onChange={(e) => setPriority(Number(e.target.value))}
                   />
                   Low
                 </label>
@@ -185,8 +184,8 @@ export default function CardModal({ card, onClose }: CardModalProps) {
                     id="medium"
                     name="priority"
                     value="2"
-                    checked={priority === "2"}
-                    onChange={(e) => setPriority(e.target.value)}
+                    checked={priority === 2}
+                    onChange={(e) => setPriority(Number(e.target.value))}
                   />
                   Medium
                 </label>
@@ -197,8 +196,8 @@ export default function CardModal({ card, onClose }: CardModalProps) {
                     id="high"
                     name="priority"
                     value="3"
-                    checked={priority === "3"}
-                    onChange={(e) => setPriority(e.target.value)}
+                    checked={priority === 3}
+                    onChange={(e) => setPriority(Number(e.target.value))}
                   />
                   High
                 </label>
@@ -207,7 +206,7 @@ export default function CardModal({ card, onClose }: CardModalProps) {
               <button
                 className="py-1 px-3 bg-blue-500 border rounded-lg text-white"
                 onClick={() => {
-                  handleUpdateCard("priority", priority);
+                  handleUpdateCard("priority", priority ?? 1);
                   setIsEditingPriority(false);
                   setTitle("")
                 }}
@@ -217,7 +216,7 @@ export default function CardModal({ card, onClose }: CardModalProps) {
                 className="py-1 px-3 bg-slate-200 border rounded-lg"
                 onClick={() => {
                   setIsEditingPriority(false);
-                  setPriority("")
+                  setPriority(undefined)
                 }}
               >Cancel</button>
             </div>
