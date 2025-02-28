@@ -10,7 +10,7 @@ export default function CardComponent({ card }: CardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const priorityMap: Record<number, { text: string; color: string }> = {
-    1: { text: "Low", color: "bg-blue-200" },
+    1: { text: "Low", color: "bg-blue-300" },
     2: { text: "Medium", color: "bg-yellow-300" },
     3: { text: "High", color: "bg-green-400" },
   };
