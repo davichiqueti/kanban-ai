@@ -1,9 +1,7 @@
-
 services:
   backend:
     build:
-      context: .
-      dockerfile: backend.dockerfile
+      context: ./backend
     env_file:
       - ./backend/.env
     environment:
@@ -17,6 +15,19 @@ services:
       - "8000:8000"
     volumes:    # TODO: Remove this volume only used to faster development without re-building
       - ./backend:/app
+
+  frontend:
+    build:
+      context: ./frontend
+    environment:
+      BACKEND_URL: "http://localhost:8000"
+    networks:
+      - database-network
+    ports:
+      - "3000:3000"
+    volumes:    # TODO: Remove this volume only used to faster development without re-building
+      - ./frontend:/app
+    command: "npm run dev"
 
   database:
     image: postgres:14
