@@ -37,7 +37,7 @@ export default function CardModal({ card, onClose }: CardModalProps) {
   const handleDeleteCard = async () => {
     try {
       const response = await deleteBoardCard(card.board_id, card.id)
-      console.log("response: ", response)
+      onClose()
 
     } catch (error) {
       console.error("Erro updating card: ", error)
@@ -56,7 +56,15 @@ export default function CardModal({ card, onClose }: CardModalProps) {
   return (
 
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      
       <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
+
+      <button
+            onClick={onClose}
+            className="bg-red-500 text-white px-4 py-2 rounded-md mb-4"
+          >
+            Close
+          </button>
 
         {/* ---------- titulo ---------- */}
 
@@ -259,26 +267,13 @@ export default function CardModal({ card, onClose }: CardModalProps) {
           </div>
 
           <button
-            onClick={onClose}
-            className="bg-red-500 text-white px-4 py-2 rounded-md"
-          >
-            Close
-          </button>
-        </div>
-
-        <div>
-          <button
             onClick={handleDeleteCard}
             className="bg-red-500 text-white px-4 py-2 rounded-md"
           >
             Delete Card
           </button>
-          
         </div>
-
       </div>
-
-
     </div>
   );
 }

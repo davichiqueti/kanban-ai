@@ -40,8 +40,7 @@ export const deleteBoardCard = async (
     try {
 
         const response = await api.delete(`/boards/${boardId}/cards/${cardId}`)
-
-        console.log("Deleted card: ", response)
+        return response.data
 
     } catch (error) {
 
