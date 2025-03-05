@@ -31,3 +31,20 @@ export const updateBoardCard = async (
         console.error("Error updating board card:  ", error)
     }
 }
+
+export const deleteBoardCard = async (
+    boardId: number,
+    cardId: number,
+) => {
+
+    try {
+
+        const response = await api.delete(`/boards/${boardId}/cards/${cardId}`)
+
+        console.log("Deleted card: ", response)
+
+    } catch (error) {
+
+    }
+
+}

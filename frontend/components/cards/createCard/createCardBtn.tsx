@@ -23,7 +23,7 @@ export default function CreateCardButton({ boardId, onBoardChange }: CreateBoard
                 onClick={() => setModalOpen(true)}
             >
 
-                <p>Novo Card</p>
+                <p>New Card</p>
             </button>
 
             {modalOpen && <CreateCardModal onClose={handleCloseModal} boardId={boardId} onBoardChange={onBoardChange} />}

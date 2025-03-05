@@ -2,7 +2,7 @@
 import { Card } from "@/types/card/cardType";
 import { useState } from "react"
 
-import { updateBoardCard } from "@/lib/services/cardServices"
+import { updateBoardCard, deleteBoardCard } from "@/lib/services/cardServices"
 
 import { AiOutlineEdit } from "react-icons/ai";
 
@@ -32,6 +32,17 @@ export default function CardModal({ card, onClose }: CardModalProps) {
     } catch (error) {
       console.error("Erro updating card: ", error)
     }
+  }
+
+  const handleDeleteCard = async () => {
+    try {
+      const response = await deleteBoardCard(card.board_id, card.id)
+      console.log("response: ", response)
+
+    } catch (error) {
+      console.error("Erro updating card: ", error)
+    }
+    
   }
 
   const priorityMap: Record<number, { text: string; color: string }> = {
@@ -233,7 +244,7 @@ export default function CardModal({ card, onClose }: CardModalProps) {
         </div>
 
 
-        <div className="flex justify-between mt-4">
+        <div className="flex justify-between mt-4 mb-4">
           <div>
             {card.created_at && (
               <p className="text-sm text-gray-500">
@@ -251,10 +262,23 @@ export default function CardModal({ card, onClose }: CardModalProps) {
             onClick={onClose}
             className="bg-red-500 text-white px-4 py-2 rounded-md"
           >
-            Fechar
+            Close
           </button>
         </div>
+
+        <div>
+          <button
+            onClick={handleDeleteCard}
+            className="bg-red-500 text-white px-4 py-2 rounded-md"
+          >
+            Delete Card
+          </button>
+          
+        </div>
+
       </div>
+
+
     </div>
   );
 }
