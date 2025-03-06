@@ -30,6 +30,9 @@ export default function CardModal({ card, onClose, onBoardChange }: CardModalPro
 
       const response = await updateBoardCard(card.board_id, card.id, updateData)
 
+      Object.assign(card, updateData);
+      onBoardChange();
+
     } catch (error) {
       console.error("Erro updating card: ", error)
     }
@@ -229,7 +232,7 @@ export default function CardModal({ card, onClose, onBoardChange }: CardModalPro
                 onClick={() => {
                   handleUpdateCard("priority", priority ?? 1);
                   setIsEditingPriority(false);
-                  setTitle("")
+                  setPriority(priority)
                 }}
               >Save</button>
 
