@@ -27,20 +27,13 @@ export default function KanbanBoard({ board, onBoardChange }: KanbanBoardProps) 
   useEffect(() => {
     if (board?.cards) {
 
-      const initialColumns: Column[] = Object.keys(columnTitles).map((status) => ({
+      const columns = Object.keys(columnTitles).map((status) => ({
         id: status as BoardCardStatus,
         title: columnTitles[status as BoardCardStatus],
-        cards: [],
+        cards: board.cards.filter((card) => card.status === status),
       }));
 
-      board.cards.forEach((card: Card) => {
-        const columnIndex = initialColumns.findIndex((col) => col.id === card.status);
-        if (columnIndex !== -1) {
-          initialColumns[columnIndex].cards.push(card);
-        }
-      });
-
-      setColumns(initialColumns);
+      setColumns(columns);
     }
   }, [board]);
 
