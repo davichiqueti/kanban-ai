@@ -4,9 +4,10 @@ import CardModal from "./cardModal";
 
 interface CardProps {
   card: Card;
+  onBoardChange: () => void
 }
 
-export default function CardComponent({ card }: CardProps) {
+export default function CardComponent({ card, onBoardChange }: CardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const priorityMap: Record<number, { text: string; color: string }> = {
@@ -40,7 +41,7 @@ export default function CardComponent({ card }: CardProps) {
       </div>
 
       {isModalOpen && (
-        <CardModal card={card} onClose={() => setIsModalOpen(false)} />
+        <CardModal card={card} onClose={() => setIsModalOpen(false)} onBoardChange={onBoardChange}/>
       )}
     </>
   );

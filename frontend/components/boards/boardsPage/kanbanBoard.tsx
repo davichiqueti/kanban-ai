@@ -63,7 +63,7 @@ export default function KanbanBoard({ board, onBoardChange }: KanbanBoardProps) 
               {column.cards.map((card) => (
 
                 <div key={card.id}  >
-                  <CardComponent key={card.id} card={card} />
+                  <CardComponent key={card.id} card={card} onBoardChange={onBoardChange} />
                 </div>
 
               ))}

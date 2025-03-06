@@ -9,9 +9,10 @@ import { AiOutlineEdit } from "react-icons/ai";
 interface CardModalProps {
   card: Card;
   onClose: () => void;
+  onBoardChange: () => void
 }
 
-export default function CardModal({ card, onClose }: CardModalProps) {
+export default function CardModal({ card, onClose, onBoardChange }: CardModalProps) {
   const [isEditingTitle, setIsEditingTitle] = useState<boolean>(false)
   const [isEditingDescription, setIsEditingDescription] = useState<boolean>(false)
   const [isEditingPriority, setIsEditingPriority] = useState<boolean>(false)
@@ -37,6 +38,7 @@ export default function CardModal({ card, onClose }: CardModalProps) {
   const handleDeleteCard = async () => {
     try {
       const response = await deleteBoardCard(card.board_id, card.id)
+      onBoardChange()
       onClose()
 
     } catch (error) {
