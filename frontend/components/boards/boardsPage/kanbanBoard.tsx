@@ -6,6 +6,9 @@ import { Card, BoardCardStatus, Column } from "@/types/card/cardType"
 
 import CardComponent from "@/components/cards/boardCard/cardComponent"
 import CreateCardButton from "@/components/cards/createCard/createCardBtn"
+import SortCardDropdown from "@/components/boards/boardsPage/sortCardDropdown"
+
+
 
 const columnTitles: Record<BoardCardStatus, string> = {
   backlog: "Backlog",
@@ -23,6 +26,7 @@ interface KanbanBoardProps {
 
 export default function KanbanBoard({ board, onBoardChange }: KanbanBoardProps) {
   const [columns, setColumns] = useState<Column[]>([])
+  const [sort, setSort] = useState<boolean>(false)
 
   useEffect(() => {
     if (board?.cards) {
@@ -41,9 +45,20 @@ export default function KanbanBoard({ board, onBoardChange }: KanbanBoardProps) 
 
     <div className="flex flex-col h-full">
 
-    <div className="ml-2">
-      <CreateCardButton boardId={board.id} onBoardChange={onBoardChange} />
-    </div>
+      <div className="ml-2 flex justify-between items-center">
+        <CreateCardButton boardId={board.id} onBoardChange={onBoardChange} />
+
+        <div className="relative">
+          <h1 
+            className="border rounded px-6 py-2 hover:bg-white"
+            onMouseDown={() => setSort(true)}
+            onMouseLeave={() => setSort(false)}
+          >Order by:</h1>
+
+          {sort && <SortCardDropdown setSort={setSort} />}
+        </div>
+
+      </div>
 
       <div className="flex flex-grow overflow-x-auto ">
         {columns.map((column) => (
