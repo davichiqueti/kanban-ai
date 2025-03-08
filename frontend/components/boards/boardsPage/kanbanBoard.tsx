@@ -7,8 +7,6 @@ import { BoardCardStatus, Column } from "@/types/card/cardType"
 import CardComponent from "@/components/cards/boardCard/cardComponent"
 import CreateCardButton from "@/components/cards/createCard/createCardBtn"
 import SortCardDropdown from "@/components/boards/boardsPage/sortCardDropdown"
-import { useStyleRegistry } from "styled-jsx"
-
 
 
 const columnTitles: Record<BoardCardStatus, string> = {
@@ -18,6 +16,7 @@ const columnTitles: Record<BoardCardStatus, string> = {
   review: "Review",
   done: "Done",
 };
+
 
 interface KanbanBoardProps {
   board: Board,
@@ -61,7 +60,6 @@ export default function KanbanBoard({ board, onBoardChange }: KanbanBoardProps) 
   const handleSortCards = (type: string) => {
     setSortType(type);
     setSort(false)
-
   }
 
 

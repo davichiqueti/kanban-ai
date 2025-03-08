@@ -22,13 +22,10 @@ export default function CreateCardButton({ boardId, onBoardChange }: CreateBoard
                             rounded-xl hover:scale-105 transition delay-75 "
                 onClick={() => setModalOpen(true)}
             >
-
                 <p>New Card</p>
             </button>
 
             {modalOpen && <CreateCardModal onClose={handleCloseModal} boardId={boardId} onBoardChange={onBoardChange} />}
-
-
         </>
     )
 }
