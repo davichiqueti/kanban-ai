@@ -34,10 +34,10 @@ export default function CreateBoardModal({ onClose, onNewBoard }: CreateBoardMod
     return (
         <div className="fixed inset-0 bg-black bg-opacity-25 flex justify-center items-center z-50">
             <div className="bg-white p-6 pt-2 rounded-lg shadow-lg max-w-lg w-full">
-                <button onClick={onClose} className="text-red-500">Fechar</button>
-                <h1><strong>Crie seu Board!</strong></h1>
+                <button onClick={onClose} className="text-red-500">Exit</button>
+                <h1><strong>Create your Board!</strong></h1>
                 <form onSubmit={handleSubmit}>
-                    <label htmlFor="nome">Nome:</label>
+                    <label htmlFor="nome">Name:</label>
                     <input
                         type="text"
                         id="nome"
@@ -48,7 +48,7 @@ export default function CreateBoardModal({ onClose, onNewBoard }: CreateBoardMod
                         required
                     />
 
-                    <label htmlFor="descricao">Descrição:</label>
+                    <label htmlFor="descricao">Description:</label>
                     <input
                         type="text"
                         id="descricao"
@@ -60,7 +60,7 @@ export default function CreateBoardModal({ onClose, onNewBoard }: CreateBoardMod
                     />
 
                     <button type="submit" className="bg-blue-500 text-white p-2 rounded mt-4 w-full">
-                        Criar Board
+                        Create Board
                     </button>
                 </form>
             </div>
