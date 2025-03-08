@@ -22,7 +22,7 @@ export default function CardModal({ card, onClose, onBoardChange }: CardModalPro
   const [priority, setPriority] = useState<number>()
 
 
-  const handleUpdateCard = async (field: string, value: string | number ) => {
+  const handleUpdateCard = async (field: string, value: string | number) => {
 
     try {
 
@@ -47,7 +47,7 @@ export default function CardModal({ card, onClose, onBoardChange }: CardModalPro
     } catch (error) {
       console.error("Erro updating card: ", error)
     }
-    
+
   }
 
   const priorityMap: Record<number, { text: string; color: string }> = {
@@ -60,16 +60,21 @@ export default function CardModal({ card, onClose, onBoardChange }: CardModalPro
 
   return (
 
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      
-      <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
+    <div
+      onClick={onClose}
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+    >
 
-      <button
-            onClick={onClose}
-            className="bg-red-500 text-white px-4 py-2 rounded-md mb-4"
-          >
-            Close
-          </button>
+      <div 
+        onClick={(e) => e.stopPropagation()}
+        className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
+
+        <button
+          onClick={onClose}
+          className="bg-red-500 text-white px-4 py-2 rounded-md mb-4"
+        >
+          Close
+        </button>
 
         {/* ---------- titulo ---------- */}
 

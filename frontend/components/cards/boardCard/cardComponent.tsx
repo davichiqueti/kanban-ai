@@ -18,6 +18,8 @@ export default function CardComponent({ card, onBoardChange }: CardProps) {
 
   const priority = priorityMap[card.priority ?? 0] || { text: "Desconhecida", color: "bg-gray-500" };
 
+  const handleCloseModal = () => setIsModalOpen(false)
+
   return (
     <>
       <div
@@ -41,7 +43,7 @@ export default function CardComponent({ card, onBoardChange }: CardProps) {
       </div>
 
       {isModalOpen && (
-        <CardModal card={card} onClose={() => setIsModalOpen(false)} onBoardChange={onBoardChange}/>
+        <CardModal card={card} onClose={handleCloseModal} onBoardChange={onBoardChange}/>
       )}
     </>
   );
