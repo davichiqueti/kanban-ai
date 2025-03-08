@@ -2,11 +2,12 @@
 import { useState, useEffect } from "react"
 
 import { Board } from "@/types/board/boardtype"
-import { Card, BoardCardStatus, Column } from "@/types/card/cardType"
+import { BoardCardStatus, Column } from "@/types/card/cardType"
 
 import CardComponent from "@/components/cards/boardCard/cardComponent"
 import CreateCardButton from "@/components/cards/createCard/createCardBtn"
 import SortCardDropdown from "@/components/boards/boardsPage/sortCardDropdown"
+import { useStyleRegistry } from "styled-jsx"
 
 
 
@@ -27,19 +28,45 @@ interface KanbanBoardProps {
 export default function KanbanBoard({ board, onBoardChange }: KanbanBoardProps) {
   const [columns, setColumns] = useState<Column[]>([])
   const [sort, setSort] = useState<boolean>(false)
+  const [sortType, setSortType] = useState<string | null>(null);
+
 
   useEffect(() => {
     if (board?.cards) {
+      let sortedCards = [...board.cards];
+
+      if (sortType === "creation") {
+        sortedCards.sort((a, b) => {
+          const dateA = a.createdAt ? new Date(a.createdAt).getTime() : Infinity;
+          const dateB = b.createdAt ? new Date(b.createdAt).getTime() : Infinity;
+          return dateA - dateB; // Crescente: mais antigos primeiro
+        });
+      } else if (sortType === "due") {
+        sortedCards.sort((a, b) => {
+          const dateA = a.dueDate ? new Date(a.dueDate).getTime() : Infinity;
+          const dateB = b.dueDate ? new Date(b.dueDate).getTime() : Infinity;
+          return dateA - dateB; // Crescente: prazos mais próximos primeiro
+        });
+      } else if (sortType === "priority") {
+        sortedCards.sort((a, b) => b.priority - a.priority);
+      }
 
       const columns = Object.keys(columnTitles).map((status) => ({
         id: status as BoardCardStatus,
         title: columnTitles[status as BoardCardStatus],
-        cards: board.cards.filter((card) => card.status === status),
+        cards: sortedCards.filter((card) => card.status === status),
       }));
 
       setColumns(columns);
     }
-  }, [board]);
+  }, [board, sortType]);
+
+  const handleSortCards = (type: string) => {
+    setSortType(type);
+    setSort(false)
+
+  }
+
 
   return (
 
@@ -55,7 +82,7 @@ export default function KanbanBoard({ board, onBoardChange }: KanbanBoardProps) 
             onMouseLeave={() => setSort(false)}
           >Order by:</h1>
 
-          {sort && <SortCardDropdown setSort={setSort} />}
+          {sort && <SortCardDropdown setSort={setSort} handleSort={handleSortCards}/>}
         </div>
 
       </div>
