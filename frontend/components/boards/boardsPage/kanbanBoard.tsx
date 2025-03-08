@@ -36,7 +36,7 @@ export default function KanbanBoard({ board, onBoardChange }: KanbanBoardProps) 
     if (board?.cards) {
       let sortedCards = [...board.cards];
 
-      if (sortType === "creation") {
+      if (sortType === "creation" || sortType === null) {
         sortedCards.sort((a, b) => {
           return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
         });
@@ -74,7 +74,7 @@ export default function KanbanBoard({ board, onBoardChange }: KanbanBoardProps) 
 
         <div className="relative">
           <h1 
-            className="border rounded px-6 py-2 hover:bg-white"
+            className="border rounded px-6 py-2 hover:bg-white "
             onMouseDown={() => setSort(true)}
             onMouseLeave={() => setSort(false)}
           >Order by:</h1>

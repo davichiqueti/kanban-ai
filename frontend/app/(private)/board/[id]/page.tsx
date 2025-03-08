@@ -70,7 +70,7 @@ export default function BoardPage() {
         <h1 className="text-2xl font-bold">{board.name}</h1>
         <p className="text-gray-600">{board.description}</p>
         <p className="text-xs text-gray-400">
-          Criado em: {new Date(board.created_at).toLocaleDateString()}
+          Created at: {new Date(board.created_at).toLocaleDateString()}
         </p>
 
       </div>

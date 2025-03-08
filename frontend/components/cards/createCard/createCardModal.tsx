@@ -53,10 +53,10 @@ export default function CreateCardModal({ onClose, boardId, onBoardChange }: Cre
     return (
         <div className="fixed inset-0 bg-black bg-opacity-25 flex justify-center items-center z-50">
             <div className="bg-white p-6 pt-2 rounded-lg shadow-lg max-w-lg w-full">
-                <button onClick={onClose} className="text-red-500">Fechar</button>
-                <h1><strong>Crie seu Card!</strong></h1>
+                <button onClick={onClose} className="text-red-500">Exit</button>
+                <h1><strong>Create your Card!</strong></h1>
                 <form onSubmit={handleSubmit}>
-                    <label htmlFor="title">Título:</label>
+                    <label htmlFor="title">Title:</label>
                     <input
                         type="text"
                         id="title"
@@ -66,7 +66,7 @@ export default function CreateCardModal({ onClose, boardId, onBoardChange }: Cre
                         required
                     />
 
-                    <label htmlFor="description">Descrição:</label>
+                    <label htmlFor="description">Description:</label>
                     <input
                         type="text"
                         id="description"
@@ -91,7 +91,7 @@ export default function CreateCardModal({ onClose, boardId, onBoardChange }: Cre
                         <option value="done">Done</option>
                     </select>
 
-                    <label htmlFor="priority">Prioridade:</label>
+                    <label htmlFor="priority">Priority:</label>
                     <select
                         
                         id="priority"
@@ -106,7 +106,7 @@ export default function CreateCardModal({ onClose, boardId, onBoardChange }: Cre
                     </select>
 
 
-                    <label htmlFor="dueDate">Data de Vencimento:</label>
+                    <label htmlFor="dueDate">Due date:</label>
                     <input
                         type="date"
                         id="dueDate"
@@ -117,7 +117,7 @@ export default function CreateCardModal({ onClose, boardId, onBoardChange }: Cre
                     />
 
                     <button type="submit" className="bg-blue-500 text-white p-2 rounded mt-4 w-full">
-                        Criar Card
+                        Create Card
                     </button>
 
                 </form>

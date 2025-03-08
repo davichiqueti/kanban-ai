@@ -16,19 +16,19 @@ export default function SortCardDropdown({ setSort, handleSort }: SortCardDropdo
             onMouseLeave={() => setSort(false)}
         >
             <div 
-                className="px-4 py-2 hover:bg-slate-50 cursor-pointer" 
+                className="px-4 py-2 hover:bg-blue-400 hover:text-white cursor-pointer" 
                 onClick={() => handleSort("creation")}
             >
                 <p>Creation date</p>
             </div>
             <div 
-                className="px-4 py-2 hover:bg-slate-50 cursor-pointer" 
+                className="px-4 py-2 hover:bg-blue-400 hover:text-white cursor-pointer" 
                 onClick={() => handleSort("due")}
             >
                 <p>Due date</p>
             </div>
             <div 
-                className="px-4 py-2 hover:bg-slate-50 cursor-pointer"
+                className="px-4 py-2 hover:bg-blue-400 hover:text-white cursor-pointer"
                 onClick={() => handleSort("priority")}
             >
                 <p>Priority</p>
