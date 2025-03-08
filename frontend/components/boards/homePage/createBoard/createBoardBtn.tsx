@@ -22,8 +22,8 @@ export default function CreateBoardButton({ onNewBoard }: CreateBoardButtonProps
                 onClick={() => setModalOpen(true)}
             >
 
-                <IoIosAddCircleOutline />
-                <p>Novo Board</p>
+                <IoIosAddCircleOutline className="text-2xl" />
+                <p className="ml-1 mr-1">New Board</p>
             </button>
 
             {modalOpen &&  <CreateBoardModal onClose={handleCloseModal} onNewBoard={onNewBoard} /> }

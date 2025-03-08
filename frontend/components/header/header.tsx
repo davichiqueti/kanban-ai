@@ -14,7 +14,7 @@ export default function Header({ userInfo }: HeaderProps) {
 
 
     return (
-        <header className="flex flex-row justify-between pt-10 mb-0 pl-10 pr-10 border-b-2 shadow-sm">
+        <header className="flex flex-row justify-between pt-10 pl-10 pr-10 border-b-2 shadow-sm">
             <div>
                 <h1>Kanban.ai</h1>
             </div>
@@ -26,7 +26,7 @@ export default function Header({ userInfo }: HeaderProps) {
                 <p
                     className="ml-4 cursor-pointer text-blue-500 hover:underline"
 
-                >Perfil</p>
+                >Profile</p>
 
                 {modalOpen &&
                     <HeaderDropdown userInfo={userInfo} setModalOpen={setModalOpen} />

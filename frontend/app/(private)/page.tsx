@@ -18,7 +18,6 @@ export default function Home() {
   const [user, setUser] = useState<User | null>(null);
   const [boards, setBoards] = useState<Board[]>([]);
 
-  const router = useRouter();
 
   useEffect(() => {
     const fetchUserAndBoards = async () => {
@@ -57,18 +56,18 @@ export default function Home() {
 
       <Header userInfo={user}></Header>
 
-      <div className="ml-20 mr-20">
+      <div className=" mt-10 ml-20 mr-20">
 
-        <div className="pt-10 mb-20">
+        <div className="mb-10">
           <h1>
-            <strong>Olá, {user?.name}</strong>. Que bom ter você de volta! 😊
+            <strong>Hello, {user?.name}</strong>. It's great to have you back! 😊
           </h1>
         </div>
 
         <div>
 
-          <h1>
-            <strong>Meus Boards</strong>
+          <h1 className="mb-2">
+            <strong>My Boards</strong>
           </h1>
 
           <MyBoardsGrid boards={boards} onNewBoard={handleCreateBoard} />

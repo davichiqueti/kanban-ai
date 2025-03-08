@@ -16,13 +16,11 @@ export default function MyBoardsGrid({ boards, onNewBoard }: MyBoardsGridprops) 
         router.push(`/board/${id}`);
     };
 
-    
 
     return (
         <div>
             <div className="mb-4">
                 <CreateBoardButton  onNewBoard={onNewBoard}/>
-
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
