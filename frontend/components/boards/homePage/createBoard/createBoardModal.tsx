@@ -32,8 +32,14 @@ export default function CreateBoardModal({ onClose, onNewBoard }: CreateBoardMod
 
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-25 flex justify-center items-center z-50">
-            <div className="bg-white p-6 pt-2 rounded-lg shadow-lg max-w-lg w-full">
+        <div 
+            onClick={onClose}
+            className="fixed inset-0 bg-black bg-opacity-25 flex justify-center items-center z-50"
+        >
+            <div 
+                onClick={(e) => e.stopPropagation()}
+                className="bg-white p-6 pt-2 rounded-lg shadow-lg max-w-lg w-full"
+            >
                 <button onClick={onClose} className="text-red-500">Exit</button>
                 <h1><strong>Create your Board!</strong></h1>
                 <form onSubmit={handleSubmit}>
