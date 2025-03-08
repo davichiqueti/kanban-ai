@@ -32,20 +32,17 @@ export default function KanbanBoard({ board, onBoardChange }: KanbanBoardProps) 
 
 
   useEffect(() => {
+
     if (board?.cards) {
       let sortedCards = [...board.cards];
 
       if (sortType === "creation") {
         sortedCards.sort((a, b) => {
-          const dateA = a.createdAt ? new Date(a.createdAt).getTime() : Infinity;
-          const dateB = b.createdAt ? new Date(b.createdAt).getTime() : Infinity;
-          return dateA - dateB; // Crescente: mais antigos primeiro
+          return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
         });
       } else if (sortType === "due") {
         sortedCards.sort((a, b) => {
-          const dateA = a.dueDate ? new Date(a.dueDate).getTime() : Infinity;
-          const dateB = b.dueDate ? new Date(b.dueDate).getTime() : Infinity;
-          return dateA - dateB; // Crescente: prazos mais próximos primeiro
+          return new Date(a.due_date).getTime() - new Date(b.due_date).getTime();
         });
       } else if (sortType === "priority") {
         sortedCards.sort((a, b) => b.priority - a.priority);
