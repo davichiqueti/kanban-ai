@@ -1,5 +1,5 @@
 
-import { Card } from "@/types/card/cardType";
+import { Card, BoardCardStatus } from "@/types/card/cardType";
 import { useState } from "react"
 
 import { updateBoardCard, deleteBoardCard } from "@/lib/services/cardServices"
@@ -16,11 +16,14 @@ export default function CardModal({ card, onClose, onBoardChange }: CardModalPro
   const [isEditingTitle, setIsEditingTitle] = useState<boolean>(false)
   const [isEditingDescription, setIsEditingDescription] = useState<boolean>(false)
   const [isEditingPriority, setIsEditingPriority] = useState<boolean>(false)
+  const [isEditingStatus, setIsEditingStatus] = useState<boolean>(false)
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState<number>()
+  const [status, setStatus] = useState<string>()
 
+  
 
   const handleUpdateCard = async (field: string, value: string | number) => {
 
@@ -58,6 +61,16 @@ export default function CardModal({ card, onClose, onBoardChange }: CardModalPro
 
   const cardPriority = priorityMap[card.priority ?? 0] || { text: "Desconhecida", color: "bg-gray-500" };
 
+  const statusTitles: Record<BoardCardStatus, string> = {
+    backlog: "Backlog",
+    "to do": "To Do",
+    doing: "Doing",
+    review: "Review",
+    done: "Done",
+  };
+
+  const cardStatus = statusTitles[card.status]
+
   return (
 
     <div
@@ -76,7 +89,7 @@ export default function CardModal({ card, onClose, onBoardChange }: CardModalPro
           Close
         </button>
 
-        {/* ---------- titulo ---------- */}
+        {/* ---------- title ---------- */}
 
         <div id="title-info" className="mb-4">
           <div className="flex flex-row gap-2 group items-center">
@@ -128,7 +141,7 @@ export default function CardModal({ card, onClose, onBoardChange }: CardModalPro
           )}
         </div>
 
-        {/* ---------- descricao ---------- */}
+        {/* ---------- description ---------- */}
 
         <div id="description-info" className="mb-4">
           <div className="flex flex-row gap-2 group items-center">
@@ -177,10 +190,10 @@ export default function CardModal({ card, onClose, onBoardChange }: CardModalPro
           )}
         </div>
 
-        {/* ---------- prioridade ---------- */}
+        {/* ---------- priority ---------- */}
 
-        <div id="priority-info">
-          <div className="flex flex-row gap-2 group items-center">
+        <div id="priority-info" className="mb-2">
+          <div className="flex flex-row gap-2 group items-center mb-1">
             <h1>Priority:</h1>
             <button
               onClick={() => setIsEditingPriority(true)}
@@ -194,7 +207,7 @@ export default function CardModal({ card, onClose, onBoardChange }: CardModalPro
 
           {isEditingPriority ? (
             <div className="">
-              <div className="mb-2 ml-1">
+              <div className="mb-2 ml-2">
                 <label htmlFor="low">
                   <input
                     type="radio"
@@ -251,7 +264,7 @@ export default function CardModal({ card, onClose, onBoardChange }: CardModalPro
             </div>
           ) : (
             <div>
-              <span className={`px-2 py-1 rounded text-white ${cardPriority.color}`}>
+              <span className={`px-2 py-1 ml-2 rounded text-white ${cardPriority.color}`}>
                 {cardPriority.text}
               </span>
 
@@ -261,7 +274,92 @@ export default function CardModal({ card, onClose, onBoardChange }: CardModalPro
 
         </div>
 
+        {/* ---------- Status ----------  */}
 
+        <div id="status-info" className="mb-2">
+          <div className="mb-1 flex flex-row gap-2 group items-center">
+            <h1>Status:</h1>
+            <button
+              onClick={() => setIsEditingStatus(true)}
+              className="ml-2 mr-2 flex flex-row gap-1 items-center opacity-0 pointer-events-none transition-opacity duration-300 
+              group-hover:opacity-100 group-hover:pointer-events-auto hover:bg-slate-200 p-1 rounded"
+            >
+              <AiOutlineEdit />
+              <p>Edit</p>
+            </button>
+          </div>
+
+          {isEditingStatus ? (
+            <div className="">
+              <div className="mb-2 ml-1">
+                <label htmlFor="low">
+                  <input
+                    type="radio"
+                    id="low"
+                    name="priority"
+                    value="1"
+                    checked={priority === 1}
+                    onChange={(e) => setPriority(Number(e.target.value))}
+                  />
+                  Low
+                </label>
+                <br></br>
+                <label htmlFor="medium">
+                  <input
+                    type="radio"
+                    id="medium"
+                    name="priority"
+                    value="2"
+                    checked={priority === 2}
+                    onChange={(e) => setPriority(Number(e.target.value))}
+                  />
+                  Medium
+                </label>
+                <br></br>
+                <label htmlFor="high">
+                  <input
+                    type="radio"
+                    id="high"
+                    name="priority"
+                    value="3"
+                    checked={priority === 3}
+                    onChange={(e) => setPriority(Number(e.target.value))}
+                  />
+                  High
+                </label>
+              </div>
+
+              <button
+                className="py-1 px-3 bg-blue-500 border rounded-lg text-white"
+                onClick={() => {
+                  handleUpdateCard("status", status ?? 1);
+                  setIsEditingStatus(false);
+                  setStatus(status)
+                }}
+              >Save</button>
+
+              <button
+                className="py-1 px-3 bg-slate-200 border rounded-lg"
+                onClick={() => {
+                  setIsEditingStatus(false);
+                  setStatus(undefined)
+                }}
+              >Cancel</button>
+            </div>
+          ) : (
+
+            <div>
+              <span className="px-2 py-1 ml-2 border border-black rounded" >
+                {cardStatus}
+              </span>
+            </div>
+          )
+          }
+
+        </div>
+
+        
+        {/* ---------- dates ---------- */}
         <div className="flex justify-between mt-4 mb-4">
           <div>
             {card.created_at && (
