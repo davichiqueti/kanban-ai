@@ -21,7 +21,7 @@ export default function CardModal({ card, onClose, onBoardChange }: CardModalPro
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState<number>()
-  const [status, setStatus] = useState<string>()
+  const [status, setStatus] = useState("")
 
   
 
@@ -291,48 +291,74 @@ export default function CardModal({ card, onClose, onBoardChange }: CardModalPro
 
           {isEditingStatus ? (
             <div className="">
-              <div className="mb-2 ml-1">
-                <label htmlFor="low">
+              <div className="mb-2 ml-2">
+                <label htmlFor="backlog">
                   <input
                     type="radio"
-                    id="low"
-                    name="priority"
-                    value="1"
-                    checked={priority === 1}
-                    onChange={(e) => setPriority(Number(e.target.value))}
+                    id="backlog"
+                    name="status"
+                    value="backlog"
+                    checked={status === "backlog"}
+                    onChange={(e) => setStatus(e.target.value)}
                   />
-                  Low
+                  Backlog
                 </label>
                 <br></br>
-                <label htmlFor="medium">
+                <label htmlFor="to do">
                   <input
                     type="radio"
-                    id="medium"
-                    name="priority"
-                    value="2"
-                    checked={priority === 2}
-                    onChange={(e) => setPriority(Number(e.target.value))}
+                    id="to do"
+                    name="status"
+                    value="to do"
+                    checked={status === "to do"}
+                    onChange={(e) => setStatus(e.target.value)}
                   />
-                  Medium
+                  To do
                 </label>
                 <br></br>
-                <label htmlFor="high">
+                <label htmlFor="doing">
                   <input
                     type="radio"
-                    id="high"
-                    name="priority"
-                    value="3"
-                    checked={priority === 3}
-                    onChange={(e) => setPriority(Number(e.target.value))}
+                    id="doing"
+                    name="status"
+                    value="doing"
+                    checked={status === "doing"}
+                    onChange={(e) => setStatus(e.target.value)}
                   />
-                  High
+                  Doing
                 </label>
+                <br></br>
+                <label htmlFor="review">
+                  <input
+                    type="radio"
+                    id="review"
+                    name="status"
+                    value="review"
+                    checked={status === "review"}
+                    onChange={(e) => setStatus(e.target.value)}
+                  />
+                  Review
+                </label>
+                <br></br>
+                <label htmlFor="done">
+                  <input
+                    type="radio"
+                    id="done"
+                    name="status"
+                    value="done"
+                    checked={status === "done"}
+                    onChange={(e) => setStatus(e.target.value)}
+                  />
+                  Done
+                </label>
+  
+                
               </div>
 
               <button
                 className="py-1 px-3 bg-blue-500 border rounded-lg text-white"
                 onClick={() => {
-                  handleUpdateCard("status", status ?? 1);
+                  handleUpdateCard("status", status);
                   setIsEditingStatus(false);
                   setStatus(status)
                 }}
@@ -342,7 +368,7 @@ export default function CardModal({ card, onClose, onBoardChange }: CardModalPro
                 className="py-1 px-3 bg-slate-200 border rounded-lg"
                 onClick={() => {
                   setIsEditingStatus(false);
-                  setStatus(undefined)
+                  setStatus("")
                 }}
               >Cancel</button>
             </div>
