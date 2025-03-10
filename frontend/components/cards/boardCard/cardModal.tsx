@@ -58,7 +58,6 @@ export default function CardModal({ card, onClose, onBoardChange }: CardModalPro
     2: { text: "Medium", color: "bg-yellow-300" },
     3: { text: "High", color: "bg-green-400" },
   };
-
   const cardPriority = priorityMap[card.priority ?? 0] || { text: "Desconhecida", color: "bg-gray-500" };
 
   const statusTitles: Record<BoardCardStatus, string> = {
@@ -68,7 +67,6 @@ export default function CardModal({ card, onClose, onBoardChange }: CardModalPro
     review: "Review",
     done: "Done",
   };
-
   const cardStatus = statusTitles[card.status]
 
   return (
@@ -351,8 +349,6 @@ export default function CardModal({ card, onClose, onBoardChange }: CardModalPro
                   />
                   Done
                 </label>
-  
-                
               </div>
 
               <button
@@ -384,8 +380,8 @@ export default function CardModal({ card, onClose, onBoardChange }: CardModalPro
 
         </div>
 
-        
         {/* ---------- dates ---------- */}
+
         <div className="flex justify-between mt-4 mb-4">
           <div>
             {card.created_at && (
@@ -407,6 +403,7 @@ export default function CardModal({ card, onClose, onBoardChange }: CardModalPro
             Delete Card
           </button>
         </div>
+
       </div>
     </div>
   );

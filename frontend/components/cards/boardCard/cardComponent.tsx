@@ -23,7 +23,8 @@ export default function CardComponent({ card, onBoardChange }: CardProps) {
   return (
     <>
       <div
-        className="bg-white p-2 rounded shadow cursor-pointer h-28"
+        className="bg-white p-2 rounded shadow cursor-pointer h-28 
+                    flex flex-col justify-between"
 
         onClick={() => setIsModalOpen(true)}
       >
@@ -36,14 +37,22 @@ export default function CardComponent({ card, onBoardChange }: CardProps) {
           </p>
         )}
 
-        <span className={`px-2 py-1 rounded text-white ${priority.color}`}>
+        <span className={`px-2 py-1 rounded text-white ${priority.color} size-fit`}>
           {priority.text}
         </span>
 
       </div>
 
       {isModalOpen && (
-        <CardModal card={card} onClose={handleCloseModal} onBoardChange={onBoardChange}/>
+        <CardModal
+          key={card.id}
+          card={card}
+          onClose={handleCloseModal}
+          onBoardChange={() => {
+            onBoardChange();
+            console.log(isModalOpen)
+          }}
+        />
       )}
     </>
   );
