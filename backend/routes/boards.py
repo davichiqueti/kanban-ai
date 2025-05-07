@@ -1,5 +1,6 @@
-from fastapi import APIRouter, Depends, HTTPException
-from models import Board, BoardCard, BoardUserLink, BoardUserRole, BoardCardPriority, BoardCardStatus, User
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
+from models import Board, BoardCard, BoardUserLink, BoardUserRole, BoardCardPriority, BoardCardStatus
+from models_.user import User
 from database import get_session
 from sqlmodel import Session, select
 from utils.jwt_authentication import get_current_user

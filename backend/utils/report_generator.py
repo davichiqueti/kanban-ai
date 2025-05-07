@@ -1,4 +1,6 @@
 from models import Board
+import smtplib
+from email.mime.text import MIMEText
 import requests
 import os
 import json
@@ -23,13 +25,19 @@ def generate_board_report(board: Board) -> str:
     return data["candidates"][0]["content"]["parts"][0]["text"]
 
 
-"""         "messages": [
-            {
-                "role": "user",
-                "content": "Generate a detailed report for the following board"
-            },
-            {
-                "role": "user",
-                "content": str(board_dict)
-            }
-        ], """
+def send_email(to_email: str, subject: str, body: str):
+    from_email = "reports@kanbaiai.com"
+    password = "your-email-password"
+
+    msg = MIMEText(body)
+    msg["Subject"] = subject
+    msg["From"] = from_email
+    msg["To"] = to_email
+
+    with smtplib.SMTP_SSL("smtp.example.com", 465) as server:
+        server.login(from_email, password)
+        server.sendmail(from_email, to_email, msg.as_string())
+
+
+def generate_board_email_report(board: Board, email: str):
+    report = generate_board_report(board)
